@@ -328,15 +328,15 @@ async def txt_handler(bot: Client, m: Message):
                     try:
                         ka=await helper.aio(url,name)
                         await prog.delete (True)
-                        time.sleep(1)
+                        time.sleep(5)
                         reply = await m.reply_text(f"Trying To Upload - `{name}`")
-                        time.sleep(1)
+                        time.sleep(5)
                         copy = await bot.send_document(chat_id = m.chat.id, document = ka, caption=f'**Index  » ** {str(count).zfill(3)}\n**Title » ** {name}.pdf\n**Batch: ** {b_name}\n\n{creditx}')
                         count+=1
                         await reply.delete (True)
-                        time.sleep(10)
+                        time.sleep(15)
                         os.remove(ka)
-                        time.sleep(3)
+                        time.sleep(5)
                     except FloodWait as e:
                         logging.error(e)
                         await m.reply_text(str(e))
@@ -347,7 +347,7 @@ async def txt_handler(bot: Client, m: Message):
                     filename = res_file
                     await helper.send_vid(bot, m,cc,filename,thumb,name,prog)
                     count+=1
-                    time.sleep(1)
+                    time.sleep(5)
             except Exception as e:
                 logging.error(e)
                 await m.reply_text(f"**Failed To Download ❌**\n**Name** - {name}\n**Link** - `{urlm}`")
