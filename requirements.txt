@@ -5,7 +5,7 @@ pyrogram
 ffmpeg
 tgcrypto
 requests
-pyromod
+pyromod==1.5
 yt-dlp
 aiohttp
 aiofiles
