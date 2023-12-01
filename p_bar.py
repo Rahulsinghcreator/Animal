@@ -16,8 +16,8 @@ class Timer:
         return False
 
 timer = Timer()
-async def progress_bar(current,total,reply,start):
-      if timer.can_send():
+async def progress_bar(current, total, reply, start):
+    if timer.can_send():
         now = time.time()
         diff = now - start
         if diff < 1:
@@ -26,11 +26,21 @@ async def progress_bar(current,total,reply,start):
             perc = f"{current * 100 / total:.1f}%"
             elapsed_time = round(diff)
             speed = current / elapsed_time
-            sp=str(hrb(speed))+"ps"
-            tot=hrb(total)
-            cur=hrb(current)
+            remaining_bytes = total - current
+            if speed > 0:
+                eta_seconds = remaining_bytes / speed
+                eta = hrt(eta_seconds, precision=1)
+            else:
+                eta = "-"
+            sp = str(hrb(speed)) + "/s"
+            tot = hrb(total)
+            cur = hrb(current)
+            bar_length = 11
+            completed_length = int(current * bar_length / total)
+            remaining_length = bar_length - completed_length
+            progress_bar = "▓" * completed_length + "▒" * remaining_length
+            
             try:
-                await reply.edit(f'`┌ 𝙋𝙧𝙤𝙜𝙧𝙚𝙨𝙨 📈 -【 {perc} 】\n├ 𝙎𝙥𝙚𝙚𝙙 🧲 -【 {sp} 】\n└ 𝙎𝙞𝙯𝙚 📂 -【 {cur} / {tot} 】`\n\n**With ❤️ From XEÑÓMÔRPH.**\n')
-               
+                await reply.edit(f'`\n ╭──⌯════Bot Statics═════⌯──╮ \n├⚡ {progress_bar}|﹝{perc}﹞ \n├🚀 Speed » {sp} \n├📟 Processed » {cur}\n├🧲 Size - ETA » {tot} - {eta} \n╰─═══ ✪Powered By META✪ ═══─╯`\n') 
             except FloodWait as e:
                 time.sleep(e.x)
